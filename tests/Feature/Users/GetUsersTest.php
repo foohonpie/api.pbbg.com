@@ -9,7 +9,7 @@ use Tests\TestCase;
 class GetUsersTest extends TestCase
 {
     /**
-     * An authenticated user can access the user page
+     * Get list of users
      *
      * @return void
      */

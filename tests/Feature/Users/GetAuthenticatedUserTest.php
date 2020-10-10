@@ -9,7 +9,7 @@ use Tests\TestCase;
 class GetAuthenticatedUserTest extends TestCase
 {
     /**
-     * An authenticated user can access the user page
+     * An authenticated user can access their user data
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class GetAuthenticatedUserTest extends TestCase
     }
 
     /**
-     * An unauthenticated user cannot access the user page
+     * An unauthenticated user cannot access user data
      *
      * @return void
      */

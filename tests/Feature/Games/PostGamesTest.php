@@ -34,7 +34,7 @@ class PostGamesTest extends TestCase
     }
 
     /**
-     * A game cannot register with incorrect input
+     * A game cannot be submitted with incorrect input
      *
      * @return void
      */
@@ -59,7 +59,7 @@ class PostGamesTest extends TestCase
     }
 
     /**
-     * A game cannot register with empty input
+     * A game cannot be submitted with empty input
      *
      * @return void
      */
