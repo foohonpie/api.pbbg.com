@@ -13,7 +13,7 @@ class PostGamesRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth('api')->guest();
+        return true;
     }
 
     /**
