@@ -35,3 +35,4 @@ Route::get('/users/{user_id}', [UserController::class, 'show']);
 // games
 Route::get('/games', [GameController::class, 'index']);
 Route::get('/games/{game_id}', [GameController::class, 'show']);
+Route::post('/games', [GameController::class, 'store']);

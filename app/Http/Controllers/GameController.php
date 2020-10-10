@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostGamesRequest;
 use App\Models\Game;
 use App\Http\Resources\Game as GameResource;
 use Illuminate\Http\Request;
@@ -24,9 +25,17 @@ class GameController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostGamesRequest $request)
     {
-        //
+        $game = Game::create(
+            [
+                'name' => $request->name,
+                'url' => $request->url,
+                'short_description' => $request->short_description
+            ]
+        );
+
+        return new GameResource(Game::find($game->id));
     }
 
     /**
