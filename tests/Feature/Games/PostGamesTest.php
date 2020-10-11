@@ -23,7 +23,7 @@ class PostGamesTest extends TestCase
     }
 
     /**
-     * An unauthenticated user can make this request
+     * An authenticated user can make this request
      *
      * @return void
      */
