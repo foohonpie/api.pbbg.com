@@ -13,7 +13,7 @@ class GetAuthenticatedUserTest extends TestCase
      *
      * @return void
      */
-    public function testAnAuthenticatedUserCanAccessTheUserPage()
+    public function testAnAuthenticatedUserCanAccessAuthenticatedUserData()
     {
         $random_uuid = uniqid();
         $response = $this->withHeaders([
@@ -38,7 +38,7 @@ class GetAuthenticatedUserTest extends TestCase
      *
      * @return void
      */
-    public function testAnUnauthetnicatedUserCannotAccessTheUserPage()
+    public function testAnUnauthenticatedUserCanNotAccessAuthenticatedUserData()
     {
         $random_uuid = uniqid();
         $response = $this->withHeaders([

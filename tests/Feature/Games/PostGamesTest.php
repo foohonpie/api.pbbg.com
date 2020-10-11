@@ -10,6 +10,44 @@ use Tests\TestCase;
 class PostGamesTest extends TestCase
 {
     use WithFaker;
+
+    /**
+     * An unauthenticated user can make this request
+     *
+     * @return void
+     */
+    public function testPostGamesWithUnauthenticatedUser()
+    {
+        $post_response = $this->withHeaders(['Accept' => 'application/json'])->post('/games');
+        $this->assertNotEquals(403, $post_response->getStatusCode());
+    }
+
+    /**
+     * An unauthenticated user can make this request
+     *
+     * @return void
+     */
+    public function testPostGamesWithAuthenticatedUser()
+    {
+        $random_uuid = uniqid();
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+        ])->post('/register', [
+            'name' => 'User_' . $random_uuid,
+            'email' => 'foo_' . $random_uuid . '@bar.baz',
+            'password' => 'foobarbaz'
+        ]);
+        $response_json = json_decode($response->content());
+        $token = $response_json->token;
+        $this->assertNotEquals('', $token); # improve this to check that token is valid JWT
+
+        $post_response = $this->withHeaders([
+            'Accept' => 'application/json',
+            'Authorization' => "Bearer $token"
+        ])->post('/games');
+        $this->assertNotEquals(403, $post_response->getStatusCode());
+    }
+
     /**
      * A game can be submitted with correct input
      *

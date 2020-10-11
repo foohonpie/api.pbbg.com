@@ -9,7 +9,7 @@ use Tests\TestCase;
 class GetGameTest extends TestCase
 {
     /**
-     * An authenticated game can access the game page
+     * Get game by id
      *
      * @return void
      */
