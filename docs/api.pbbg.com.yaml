@@ -3,12 +3,12 @@ openapi: "3.0.0"
 info:
   title: "The PBBG API"
   description: "The API for Persistent Browser-Based Games."
-  version: "0.1.1"
+  version: "0.1.2"
 externalDocs:
   description: "Find out more about this project"
   url: "https://github.com/pbbg"
 servers:
-- url: "https://virtserver.swaggerhub.com/pbbg/api.pbbg.com/0.1.1"
+- url: "https://virtserver.swaggerhub.com/pbbg/api.pbbg.com/0.1.2"
   description: "SwaggerHub API Auto Mocking"
 - url: "https://dev-api.pbbg.com"
   description: "Development API"
@@ -309,6 +309,65 @@ paths:
                       total:
                         type: "number"
                         example: 1
+    post:
+      tags:
+        - "Games"
+      summary: "Create game"
+      operationId: "createGame"
+      requestBody:
+        description: "Created game object"
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                url:
+                  type: "string"
+                  example: "https://example.com"
+                name:
+                  type: "string"
+                  example: "Example Game"
+                tags:
+                  type: "string"
+                  example: "foo, bar, baz"
+                short_description:
+                  type: "string"
+        required: true
+      responses:
+        "200":
+          description: "successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Game"
+        "422":
+          description: "invalid submission"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  message:
+                    type: "string"
+                    example: "The given data was invalid."
+                  errors:
+                    type: "object"
+                    properties:
+                      url:
+                        type: "array"
+                        items:
+                          type: "string"
+                          example: "Example error message."
+                      name:
+                        type: "array"
+                        items:
+                          type: "string"
+                          example: "Example error message."
+                      short_description:
+                        type: "array"
+                        items:
+                          type: "string"
+                          example: "Example error message."
   /games/{gameId}:
     get:
       tags:
@@ -364,6 +423,9 @@ components:
         slug:
           type: "string"
           example: "foo-bar"
+        tags:
+          type: "string"
+          example: "foo, bar, baz"
         url:
           type: "string"
           example: "https://example.com"
