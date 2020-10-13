@@ -328,8 +328,10 @@ paths:
                   type: "string"
                   example: "Example Game"
                 tags:
-                  type: "string"
-                  example: "foo, bar, baz"
+                  type: "array"
+                  items:
+                    type: "string"
+                    example: "example tag"
                 short_description:
                   type: "string"
         required: true
@@ -424,8 +426,10 @@ components:
           type: "string"
           example: "foo-bar"
         tags:
-          type: "string"
-          example: "foo, bar, baz"
+          type: "array"
+          items:
+            type: "string"
+            example: "example tag"
         url:
           type: "string"
           example: "https://example.com"
