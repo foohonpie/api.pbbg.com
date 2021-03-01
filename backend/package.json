@@ -1,0 +1,9 @@
+{
+    "private": true,
+    "scripts": {},
+    "devDependencies": {},
+    "engines": {
+        "npm": "You are trying to install frontend dependencies in the laravel app. Laravel is API-only in this project",
+        "yarn": "You are trying to install frontend dependencies in the laravel app. Laravel is API-only in this project"
+    }
+}
