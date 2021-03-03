@@ -40,8 +40,6 @@ services:
     container_name: frontend
     restart: on-failure
     working_dir: /app
-    volumes:
-      - ./frontend/dist:/app
     depends_on:
       - database
       - backend
