@@ -48,7 +48,7 @@ Here's a highlight of what this project's architecture is equipped to do:
 to allow for complete flexibility in build and deployment.
 
 #### NGINX for Reverse Proxy
-The internals of how containers talk to each other are inside the `./proxy/pbbg.conf` file.  It's quite short:
+The internals of how containers talk to each other are inside the `./proxy/default.conf` file.  It's quite short:
 ```bash
 server {
     listen 80;
@@ -91,10 +91,10 @@ And correspondingly, this is the proxy as defined by `./docker-compose.yml`:
 ```
 Things to note:
 * Because of the mounted volume the frontend can build *outside* of the Proxy (also outside the Backend) container and when it
-produces stuff in `/dist` that directory is immediately sync'd to the proxy container's internal `/app` directory. And the `pbbg.conf`
+produces stuff in `/dist` that directory is immediately sync'd to the proxy container's internal `/app` directory. And the `default.conf`
 nginx location of `root /app;` means that it will serve that.
 * Nginx also uses `proxy_pass` whenever a path has `/api` on it. `proxy_pass` sends to the *internal* network "backend" service on the specified port.
-* The other mounted volume is the `pbbg.conf` file itself - allowing on the fly changes/refreshes.
+* The other mounted volume is the `default.conf` file itself - allowing on the fly changes/refreshes.
 
 ## We don't need Laravel Sail
 Using it will make overall Deployment and Development for PBBG.com more complicated than it needs to be, place artificial constraints on us, and will cost more time than it saves. As stated on their official website:
