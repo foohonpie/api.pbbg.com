@@ -1,0 +1,48 @@
+version: "3.8"
+services:
+  database:
+    build:
+      args:
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        MYSQL_USER: ${DB_USERNAME}
+        SERVICE_TAGS: dev
+        SERVICE_NAME: database
+      context: ./database
+      dockerfile: Dockerfile
+    image: pbbg-database
+    container_name: database
+    restart: on-failure
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: pbbg-backend
+    container_name: backend
+    restart: on-failure
+    depends_on:
+      - database
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: pbbg-frontend
+    container_name: frontend
+    restart: on-failure
+    depends_on:
+      - database
+      - backend
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: pbbg-proxy
+    container_name: proxy
+    restart: on-failure
+    ports:
+    - 80:80
+    depends_on:
+      - database
+      - backend
+      - frontend
