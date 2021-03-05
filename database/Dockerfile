@@ -17,3 +17,6 @@ ENV SERVICE_NAME=${SERVICE_NAME}
 WORKDIR /docker-entrypoint-initdb.d
 
 COPY . /docker-entrypoint-initdb.d
+
+# For documentation to developers - EXPOSE command doesn't actually do anything, but tells what should be made open
+EXPOSE 3306

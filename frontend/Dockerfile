@@ -15,5 +15,8 @@ COPY . .
 # Build Vue app to create /dist folder
 RUN yarn run build
 
+# For documentation to developers - EXPOSE command doesn't actually do anything, but tells what should be made open
+EXPOSE 3000
+
 # Serve (development server here, don't do in production)
 CMD ["yarn", "serve"]

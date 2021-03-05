@@ -23,7 +23,7 @@ The application is composed of distinct and independent "containers" which each 
 |:--------------|:--------------------------------|:--------------|:------------|
 | `/frontend`   | User Interface with Vue.js      | 80            |             |
 | `/backend`    | API with Laravel 8              | 9000          |             |
-| `/database`   | Database with Mysql             | 3306, 33060   |             |
+| `/database`   | Database with Mysql             | 3306          |             |
 | `/proxy`      | Reverse proxy with Nginx        | 80            |80           |
 
 

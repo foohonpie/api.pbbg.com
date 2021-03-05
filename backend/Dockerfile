@@ -31,6 +31,9 @@ WORKDIR /var/www
 # Copy backend source into working directory
 COPY . /var/www
 
+# For documentation to developers - EXPOSE command doesn't actually do anything, but tells what should be made open
+EXPOSE 8000
+
 # If you do not specify host of 0.0.0.0 then the default (localhost or 127.0.0.1) will
 # NOT be accessible from within the docker network and all /backend/xxx requests will 502
 CMD bash -c "composer update && composer install && php artisan serve --host=0.0.0.0 --port=8000"
