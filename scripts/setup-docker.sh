@@ -5,7 +5,7 @@ set -e
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
-echo "${GREEN}==== setup-docker.sh script ====${NC}"
+echo "==== setup-docker.sh script ===="
 echo "${GREEN}Updating apt-get...${NC}"
 sudo apt-get update
 

@@ -1,15 +1,15 @@
 #!/bin/sh
 set -e
-# This script builds and deploys images to Docker Hub
-# Development Usage: ./deploy-images.sh -username myUserName -password myPassword
-# Production Usage: ./deploy-images.sh -username myUserName -password myPassword -production true
+# This script pushes EXISTING images to Docker Hub - this script is only meant for PBBG Maintainers to use!
+# Development Usage: ./push-images.sh -username myUserName -password myPassword
+# Production Usage: ./push-images.sh -username myUserName -password myPassword -production true
 
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
-echo "${YELLOW}==== deploy-images.sh script ====${NC}"
+echo "==== push-images.sh script ===="
 while [[ $# -gt 0 ]]; do
     case "$1" in
     -username)
@@ -31,7 +31,7 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-echo "${GREEN}Logging into PBBG.com Docker Hub${NC}"
+echo "Logging into PBBG.com Docker Hub"
 docker login --username $username --password $password
 
 if [[ -n "$production" ]]; then

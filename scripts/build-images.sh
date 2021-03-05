@@ -1,8 +1,8 @@
 #!/bin/sh
 set -e
 # This script builds images
-# Usage (for development images): ./build-images.sh
-# Usage (for production images): ./build-images.sh production
+# Development Usage: ./build-images.sh
+# Production  Usage: ./build-images.sh production
 
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
@@ -10,40 +10,53 @@ CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
 production=$1
+devTag=master
+prodTag=release
 
-echo "${GREEN}==== build-images.sh script ====${NC}"
-echo "${GREEN}Stopping running containers...${NC}"
-# Bring down containers
+echo "==== build-images.sh script ===="
+echo "Stopping running containers..."
 docker-compose down
 
-echo "${GREEN}Deleting stopped containers...${NC}"
-# Remove stopped containers
+echo "Deleting stopped containers..."
 docker-compose rm
 
-echo "${GREEN}Deleting existing images...${NC}"
-# Delete current dev images for rebuild
-if [ "$(docker ps -a | grep frontend)" ]; then
-  docker rmi frontend:master frontend:release
+echo "Deleting existing development images..."
+if [ "$(docker image ls -a | grep frontend | grep $devTag)" ]; then
+  docker rmi frontend:$devTag
 fi
-if [ "$(docker ps -a | grep backend)" ]; then
-  docker rmi backend:master backend:release
+if [ "$(docker image ls -a | grep backend | grep $devTag)" ]; then
+  docker rmi backend:$devTag
 fi
-if [ "$(docker ps -a | grep proxy)" ]; then
-  docker rmi proxy:master proxy:release
+if [ "$(docker image ls -a | grep database | grep $devTag)" ]; then
+  docker rmi database:$devTag
 fi
-if [ "$(docker ps -a | grep database)" ]; then
-  docker rmi database:master database:release
+if [ "$(docker image ls -a | grep proxy | grep $devTag)" ]; then
+  docker rmi proxy:$devTag
 fi
+echo "${YELLOW}Successfully deleted development images...${NC}"
+
+echo "Deleting existing production images..."
+if [ "$(docker image ls -a | grep frontend | grep $prodTag)" ]; then
+  docker rmi frontend:$prodTag
+fi
+if [ "$(docker image ls -a | grep backend | grep $prodTag)" ]; then
+  docker rmi backend:$prodTag
+fi
+if [ "$(docker image ls -a | grep database | grep $prodTag)" ]; then
+  docker rmi database:$prodTag
+fi
+if [ "$(docker image ls -a | grep proxy | grep $prodTag)" ]; then
+  docker rmi proxy:$prodTag
+fi
+echo "${CYAN}Successfully deleted production images...${NC}"
 
 if [[ -n "$production" ]]; then
-  echo "${CYAN}Building production images...${NC}"
-  # Build new Production images
+  echo "Building production images..."
   docker-compose -f docker-compose.build.yml build --parallel
-  echo "${GREEN}Successfully built production  images${NC}"
+  echo "${CYAN}Successfully built production  images${NC}"
 else
-  echo "${YELLOW}Building development images...${NC}"
-  # Build new Development images
+  echo "Building development images..."
   docker-compose build --parallel
-  echo "${GREEN}Successfully built development images${NC}"
+  echo "${YELLOW}Successfully built development images${NC}"
 fi
 
