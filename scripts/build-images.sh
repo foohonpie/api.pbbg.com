@@ -22,37 +22,37 @@ docker-compose rm
 
 echo "Deleting existing development images..."
 if [ "$(docker image ls -a | grep frontend | grep $devTag)" ]; then
-  docker rmi frontend:$devTag
+  docker rmi pbbg/frontend:$devTag
 fi
 if [ "$(docker image ls -a | grep backend | grep $devTag)" ]; then
-  docker rmi backend:$devTag
+  docker rmi pbbg/backend:$devTag
 fi
 if [ "$(docker image ls -a | grep database | grep $devTag)" ]; then
-  docker rmi database:$devTag
+  docker rmi pbbg/database:$devTag
 fi
 if [ "$(docker image ls -a | grep proxy | grep $devTag)" ]; then
-  docker rmi proxy:$devTag
+  docker rmi pbbg/proxy:$devTag
 fi
 echo "${YELLOW}Successfully deleted development images...${NC}"
 
 echo "Deleting existing production images..."
 if [ "$(docker image ls -a | grep frontend | grep $prodTag)" ]; then
-  docker rmi frontend:$prodTag
+  docker rmi pbbg/frontend:$prodTag
 fi
 if [ "$(docker image ls -a | grep backend | grep $prodTag)" ]; then
-  docker rmi backend:$prodTag
+  docker rmi pbbg/backend:$prodTag
 fi
 if [ "$(docker image ls -a | grep database | grep $prodTag)" ]; then
-  docker rmi database:$prodTag
+  docker rmi pbbg/database:$prodTag
 fi
 if [ "$(docker image ls -a | grep proxy | grep $prodTag)" ]; then
-  docker rmi proxy:$prodTag
+  docker rmi pbbg/proxy:$prodTag
 fi
 echo "${CYAN}Successfully deleted production images...${NC}"
 
 if [[ -n "$production" ]]; then
   echo "Building production images..."
-  docker-compose -f docker-compose.build.yml build --parallel
+  docker-compose -f docker-compose.build-for-prod.yml build --parallel
   echo "${CYAN}Successfully built production  images${NC}"
 else
   echo "Building development images..."

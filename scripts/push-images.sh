@@ -36,7 +36,7 @@ docker login --username $username --password $password
 
 if [[ -n "$production" ]]; then
   echo "${CYAN}Pushing production images to PBBG.com Docker Hub${NC}"
-  docker-compose -f docker-compose.build.yml push
+  docker-compose -f docker-compose.build-for-prod.yml push
 else
   echo "${YELLOW}Pushing development images to PBBG.com Docker Hub${NC}"
   docker-compose push
