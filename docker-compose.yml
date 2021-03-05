@@ -1,52 +1,47 @@
 version: "3.8"
 services:
   database:
-    image: mysql:8.0.23
-    container_name: database
-    restart: on-failure
-    environment:
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_USER: ${DB_USERNAME}
-      SERVICE_TAGS: dev
-      SERVICE_NAME: database
-    volumes:
-      - ./database:/docker-entrypoint-initdb.d
-    networks:
-      - pbbg
-  backend:
     build:
       args:
-        user: ${ADMIN_USER}
-        uid: ${ADMIN_UID}
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        MYSQL_USER: ${DB_USERNAME}
+        SERVICE_TAGS: dev
+        SERVICE_NAME: database
+      context: ./database
+      dockerfile: Dockerfile
+    image: docker.io/pbbg/database:master
+    container_name: database
+    restart: on-failure
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+  backend:
+    build:
       context: ./backend
       dockerfile: Dockerfile
-    image: pbbg-backend
+    image: docker.io/pbbg/backend:master
     container_name: backend
     restart: on-failure
-    working_dir: /var/www/
     volumes:
       - ./backend:/var/www
     depends_on:
       - database
-    networks:
-      - pbbg
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: pbbg-frontend
+    image: docker.io/pbbg/frontend:master
     container_name: frontend
     restart: on-failure
-    working_dir: /app
     depends_on:
       - database
       - backend
-    networks:
-      - pbbg
   proxy:
-    image: nginx:1.18.0-alpine
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: docker.io/pbbg/proxy:master
     container_name: proxy
     restart: on-failure
     ports:
@@ -57,8 +52,3 @@ services:
       - database
       - backend
       - frontend
-    networks:
-      - pbbg
-networks:
-  pbbg:
-    driver: bridge

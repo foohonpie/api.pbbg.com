@@ -11,14 +11,14 @@ services:
         SERVICE_NAME: database
       context: ./database
       dockerfile: Dockerfile
-    image: pbbg-database
+    image: docker.io/pbbg/database:release
     container_name: database
     restart: on-failure
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    image: pbbg-backend
+    image: docker.io/pbbg/backend:release
     container_name: backend
     restart: on-failure
     depends_on:
@@ -27,7 +27,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    image: pbbg-frontend
+    image: docker.io/pbbg/frontend:release
     container_name: frontend
     restart: on-failure
     depends_on:
@@ -37,7 +37,7 @@ services:
     build:
       context: ./proxy
       dockerfile: Dockerfile
-    image: pbbg-proxy
+    image: docker.io/pbbg/proxy:release
     container_name: proxy
     restart: on-failure
     ports:
