@@ -1,5 +1,8 @@
 FROM php:8.0.2-fpm
 
+# Set working directory
+WORKDIR /var/www
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
@@ -25,12 +28,16 @@ RUN docker-php-ext-install \
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
-WORKDIR /var/www
-
 # Copy backend source into working directory
-COPY . /var/www
+COPY . ./
+
+RUN composer update \
+    && composer install \
+    && composer dump-autoload
+
+# For documentation to developers - EXPOSE command doesn't actually do anything, but tells what should be made open
+EXPOSE 8000
 
 # If you do not specify host of 0.0.0.0 then the default (localhost or 127.0.0.1) will
 # NOT be accessible from within the docker network and all /backend/xxx requests will 502
-CMD bash -c "composer update && composer install && php artisan serve --host=0.0.0.0 --port=8000"
+CMD bash -c "php artisan serve --host=0.0.0.0 --port=8000"

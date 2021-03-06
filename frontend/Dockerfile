@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:lts-alpine AS builder
 
 # Set working directory
 WORKDIR /app
@@ -15,5 +15,20 @@ COPY . .
 # Build Vue app to create /dist folder
 RUN yarn run build
 
-# Serve (development server here, don't do in production)
-CMD ["yarn", "serve"]
+# Final stage build
+FROM node:lts-alpine
+WORKDIR /app
+
+RUN apk update \
+    && apk add jq
+
+RUN jq -n '{"name": "ui","description": "","version": "0.1.0","dependencies": {"express": "^4.17.1","serve-static": "^1.14.1"},"devDependencies": {}}' > package.json
+RUN yarn
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/server.js .
+
+# For documentation to developers - EXPOSE command doesn't actually do anything, but tells what should be made open
+EXPOSE 3000
+
+CMD ["node", "server.js"]

@@ -15,7 +15,7 @@ since all services and containers can more easily be moved as one/at once and re
 |:--------------|:--------------------------------|:--------------|:------------|
 | `/frontend`   | User Interface with Vue.js      | 80            |             |
 | `/backend`    | API with Laravel 8              | 9000          |             |
-| `/database`   | Database with Mysql             | 3306, 33060   |             |
+| `/database`   | Database with Mysql             | 3306          |             |
 | `/proxy`      | Reverse proxy with Nginx        | 80            |80           |
 
 #### How to start this project locally
