@@ -32,7 +32,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 echo "Logging into PBBG.com Docker Hub"
-docker login --username $username --password $password
+echo $password | docker login -u $username --password-stdin
 
 if [[ -n "$production" ]]; then
   echo "${CYAN}Pushing production images to PBBG.com Docker Hub${NC}"
