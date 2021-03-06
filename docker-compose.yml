@@ -23,8 +23,6 @@ services:
     image: docker.io/pbbg/backend:master
     container_name: backend
     restart: on-failure
-    volumes:
-      - ./backend:/var/www
     depends_on:
       - database
   frontend:
