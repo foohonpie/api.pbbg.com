@@ -1,0 +1,41 @@
+name: PBBG Development Build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build development images
+        env:
+          APP_NAME: ${{secrets.APP_NAME}}
+          APP_ENV: ${{secrets.APP_ENV}}
+          APP_KEY: ${{secrets.APP_KEY}}
+          APP_DEBUG: ${{secrets.APP_DEBUG}}
+          APP_URL: ${{secrets.APP_URL}}
+          LOG_CHANNEL: ${{secrets.LOG_CHANNEL}}
+          DB_CONNECTION: ${{secrets.DB_CONNECTION}}
+          DB_HOST: ${{secrets.DB_HOST}}
+          DB_PORT: ${{secrets.DB_PORT}}
+          DB_DATABASE: ${{secrets.DB_DATABASE}}
+          DB_USERNAME: ${{secrets.DB_USERNAME}}
+          DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+          BROADCAST_DRIVER: ${{secrets.BROADCAST_DRIVER}}
+          CACHE_DRIVER: ${{secrets.CACHE_DRIVER}}
+          QUEUE_CONNECTION: ${{secrets.QUEUE_CONNECTION}}
+          SESSION_DRIVER: ${{secrets.SESSION_DRIVER}}
+          SESSION_LIFETIME: ${{secrets.SESSION_LIFETIME}}
+          MAIL_DRIVER: ${{MAIL_DRIVER}}
+          MAIL_HOST: ${{MAIL_HOST}}
+          MAIL_PORT: ${{MAIL_PORT}}
+        run: |
+          chmod 755 ./scripts/build-images.sh; ./scripts/build-images.sh
+      - name: Push images to Docker Hub
+        env:
+          DOCKER_USER: ${{secrets.DOCKER_USER}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+        run: |
+          chmod 755 ./scripts/push-images.sh; ./scripts/push-images.sh -username ${{secrets.DOCKER_USER}} -password ${{secrets.DOCKER_PASSWORD}}
