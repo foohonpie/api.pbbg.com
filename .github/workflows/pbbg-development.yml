@@ -28,9 +28,9 @@ jobs:
           QUEUE_CONNECTION: ${{secrets.QUEUE_CONNECTION}}
           SESSION_DRIVER: ${{secrets.SESSION_DRIVER}}
           SESSION_LIFETIME: ${{secrets.SESSION_LIFETIME}}
-          MAIL_DRIVER: ${{MAIL_DRIVER}}
-          MAIL_HOST: ${{MAIL_HOST}}
-          MAIL_PORT: ${{MAIL_PORT}}
+          MAIL_DRIVER: ${{secrets.MAIL_DRIVER}}
+          MAIL_HOST: ${{secrets.MAIL_HOST}}
+          MAIL_PORT: ${{secrets.MAIL_PORT}}
         run: |
           chmod 755 ./scripts/build-images.sh; ./scripts/build-images.sh
       - name: Push images to Docker Hub
