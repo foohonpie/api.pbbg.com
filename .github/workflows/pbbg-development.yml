@@ -40,8 +40,8 @@ jobs:
         run: |
           chmod 755 ./scripts/push-images.sh; ./scripts/push-images.sh --username=${{secrets.DOCKER_USER}} --password=${{secrets.DOCKER_PASSWORD}}
       - name: Update Portainer Stack in Development
-          env:
-            PORTAINER_USER: ${{secrets.PORTAINER_USER}}
-            PORTAINER_PASSWORD: ${{secrets.PORTAINER_PASSWORD}}
-          run: |
-            chmod 755 ./scripts/update-portainer-stack.sh; ./scripts/update-portainer-stack.sh --portainer_username=${{secrets.PORTAINER_USER}} --portainer_password=${{secrets.PORTAINER_PASSWORD}}
+        env:
+          PORTAINER_USER: ${{secrets.PORTAINER_USER}}
+          PORTAINER_PASSWORD: ${{secrets.PORTAINER_PASSWORD}}
+        run: |
+          chmod 755 ./scripts/update-portainer-stack.sh; ./scripts/update-portainer-stack.sh --portainer_username=${{secrets.PORTAINER_USER}} --portainer_password=${{secrets.PORTAINER_PASSWORD}}
