@@ -1,5 +1,5 @@
 name: PBBG Development Build
-
+# Should run whenever a push to Master branch is made
 on:
   push:
     branches: [ master ]
@@ -39,3 +39,9 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           chmod 755 ./scripts/push-images.sh; ./scripts/push-images.sh --username=${{secrets.DOCKER_USER}} --password=${{secrets.DOCKER_PASSWORD}}
+      - name: Update Portainer Stack in Development
+          env:
+            PORTAINER_USER: ${{secrets.PORTAINER_USER}}
+            PORTAINER_PASSWORD: ${{secrets.PORTAINER_PASSWORD}}
+          run: |
+            chmod 755 ./scripts/update-portainer-stack.sh; ./scripts/update-portainer-stack.sh --portainer_username=${{secrets.PORTAINER_USER}} --portainer_password=${{secrets.PORTAINER_PASSWORD}}
