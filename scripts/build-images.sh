@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+# IMPORTANT: this script is intended to be used during the Github Actions build steps
 # This script builds images
 # Development Usage: ./build-images.sh
 # Production  Usage: ./build-images.sh production
@@ -13,14 +14,14 @@ production=$1
 devTag=master
 prodTag=release
 
-echo "==== build-images.sh script ===="
-echo "Stopping running containers..."
+echo $(date -u) "==== build-images.sh script ===="
+echo $(date -u) "Stopping running containers..."
 docker-compose down
 
-echo "Deleting stopped containers..."
+echo $(date -u) "Deleting stopped containers..."
 docker-compose rm
 
-echo "Deleting existing development images..."
+echo $(date -u) "Deleting existing development images..."
 if [ "$(docker image ls -a | grep frontend | grep $devTag)" ]; then
   docker rmi pbbg/frontend:$devTag
 fi
@@ -33,9 +34,9 @@ fi
 if [ "$(docker image ls -a | grep proxy | grep $devTag)" ]; then
   docker rmi pbbg/proxy:$devTag
 fi
-echo "${YELLOW}Successfully deleted development images...${NC}"
+echo $(date -u) "${YELLOW}Successfully deleted development images...${NC}"
 
-echo "Deleting existing production images..."
+echo $(date -u) "Deleting existing production images..."
 if [ "$(docker image ls -a | grep frontend | grep $prodTag)" ]; then
   docker rmi pbbg/frontend:$prodTag
 fi
@@ -48,15 +49,15 @@ fi
 if [ "$(docker image ls -a | grep proxy | grep $prodTag)" ]; then
   docker rmi pbbg/proxy:$prodTag
 fi
-echo "${CYAN}Successfully deleted production images...${NC}"
+echo $(date -u) "${CYAN}Successfully deleted production images...${NC}"
 
-if [[ -n "$production" ]]; then
-  echo "Building production images..."
+if [ -n "$production" ]; then
+  echo $(date -u) "Building production images..."
   docker-compose -f docker-compose.build-for-prod.yml build --parallel
-  echo "${CYAN}Successfully built production  images${NC}"
+  echo $(date -u) "${CYAN}Successfully built production  images${NC}"
 else
-  echo "Building development images..."
+  echo $(date -u) "Building development images..."
   docker-compose build --parallel
-  echo "${YELLOW}Successfully built development images${NC}"
+  echo $(date -u) "${YELLOW}Successfully built development images${NC}"
 fi
 

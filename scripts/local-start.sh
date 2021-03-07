@@ -6,19 +6,19 @@ GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo "==== local-start.sh script ===="
+echo $(date -u) "==== local-start.sh script ===="
 
-echo "Bringing down running containers..."
+echo $(date -u) "Bringing down running containers..."
 docker-compose down
-echo "${GREEN}Successfully stopped containers.${NC}"
+echo $(date -u) "${GREEN}Successfully stopped containers.${NC}"
 
-echo "Building development images in parallel..."
+echo $(date -u) "Building development images in parallel..."
 docker-compose build --parallel
-echo "${GREEN}Successfully built development images.${NC}"
+echo $(date -u) "${GREEN}Successfully built development images.${NC}"
 
-echo "Starting containers..."
+echo $(date -u) "Starting containers..."
 docker-compose up -d
-echo "${GREEN}Successfully started containers.${NC}"
+echo $(date -u) "${GREEN}Successfully started containers.${NC}"
 
-echo "${YELLOW}Containers have executed their final CMD, RUN, or ENTRYPOINT commands and may not have finished installing their own dependencies.${NC}"
-echo "${GREEN}Proxy entry should be accessible on host machine at http://localhost${NC}"
+echo $(date -u) "${YELLOW}Containers have executed their final CMD, RUN, or ENTRYPOINT commands and may not have finished installing their own dependencies.${NC}"
+echo $(date -u) "${GREEN}Proxy entry should be accessible on host machine at http://localhost${NC}"

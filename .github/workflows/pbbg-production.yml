@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build development images
+      - name: Build production images
         env:
           APP_NAME: ${{secrets.APP_NAME}}
           APP_ENV: ${{secrets.APP_ENV}}
@@ -31,9 +31,9 @@ jobs:
           QUEUE_CONNECTION: ${{secrets.QUEUE_CONNECTION}}
           SESSION_DRIVER: ${{secrets.SESSION_DRIVER}}
           SESSION_LIFETIME: ${{secrets.SESSION_LIFETIME}}
-          MAIL_DRIVER: ${{MAIL_DRIVER}}
-          MAIL_HOST: ${{MAIL_HOST}}
-          MAIL_PORT: ${{MAIL_PORT}}
+          MAIL_DRIVER: ${{secrets.MAIL_DRIVER}}
+          MAIL_HOST: ${{secrets.MAIL_HOST}}
+          MAIL_PORT: ${{secrets.MAIL_PORT}}
         run: |
           chmod 755 ./scripts/build-images.sh; ./scripts/build-images.sh production
       - name: Push images to Docker Hub
@@ -41,4 +41,10 @@ jobs:
           DOCKER_USER: ${{secrets.DOCKER_USER}}
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
-          chmod 755 ./scripts/push-images.sh; ./scripts/push-images.sh -username ${{secrets.DOCKER_USER}} -password ${{secrets.DOCKER_PASSWORD}} -production true
+          chmod 755 ./scripts/push-images.sh; ./scripts/push-images.sh --username=${{secrets.DOCKER_USER}} --password=${{secrets.DOCKER_PASSWORD}} --production=true
+      - name: Update Portainer Stack in Production
+          env:
+            PORTAINER_USER: ${{secrets.PORTAINER_USER}}
+            PORTAINER_PASSWORD: ${{secrets.PORTAINER_PASSWORD}}
+          run: |
+            chmod 755 ./scripts/update-portainer-stack.sh; ./scripts/update-portainer-stack.sh --portainer_username=${{secrets.PORTAINER_USER}} --portainer_password=${{secrets.PORTAINER_PASSWORD}} --production=true
