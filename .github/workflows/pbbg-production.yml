@@ -42,9 +42,27 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           chmod 755 ./scripts/push-images.sh; ./scripts/push-images.sh --username=${{secrets.DOCKER_USER}} --password=${{secrets.DOCKER_PASSWORD}} --production=true
-      - name: Update Portainer Stack in Production
-          env:
-            PORTAINER_USER: ${{secrets.PORTAINER_USER}}
-            PORTAINER_PASSWORD: ${{secrets.PORTAINER_PASSWORD}}
-          run: |
-            chmod 755 ./scripts/update-portainer-stack.sh; ./scripts/update-portainer-stack.sh --portainer_username=${{secrets.PORTAINER_USER}} --portainer_password=${{secrets.PORTAINER_PASSWORD}} --production=true
+      - name: Copy config and scripts to Development host
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.PBBG_DEV_HOST }}
+          username: ${{ secrets.PBBG_DEV_USERNAME }}
+          key: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
+          port: 22
+          source: "production-stack.yml,scripts/create-stack.sh"
+          target: ""
+      - name: Deploy and Update docker stack on Development Host
+        uses: appleboy/ssh-action@master
+        env:
+          DB_DATABASE: ${{secrets.DB_DATABASE}}
+          DB_USERNAME: ${{secrets.DB_USERNAME}}
+          DB_PASSWORD: ${{secrets.DB_PASSWORD}}
+        with:
+          host: ${{ secrets.PBBG_DEV_HOST }}
+          username: ${{ secrets.PBBG_DEV_USERNAME }}
+          key: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
+          port: 22
+          envs: DB_DATABASE,DB_PASSWORD,DB_USERNAME
+          script: |
+            chmod 755 ./create-stack.sh
+            bash ./create-stack.sh --databasename=$DB_DATABASE --rootpassword=$DB_PASSWORD --username=$DB_USERNAME --production=true

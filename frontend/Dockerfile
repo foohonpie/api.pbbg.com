@@ -20,7 +20,7 @@ FROM node:lts-alpine
 WORKDIR /app
 
 RUN apk update \
-    && apk add jq
+    && apk add jq curl
 
 RUN jq -n '{"name": "ui","description": "","version": "0.1.0","dependencies": {"express": "^4.17.1","serve-static": "^1.14.1"},"devDependencies": {}}' > package.json
 RUN yarn

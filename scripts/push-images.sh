@@ -33,8 +33,7 @@ echo $(date -u) "Logging into PBBG.com Docker Hub"
 echo $password | docker login -u $username --password-stdin
 
 if [ -n "$production" ]; then
-  echo $(date -u) "${CYAN}Pushing production images to PBBG.com Docker Hub${NC}"
-  docker-compose -f docker-compose.build-for-prod.yml push
+  echo $(date -u) "${CYAN}Nothing to push - TODO once PROD is ready!${NC}"
 else
   echo $(date -u) "${YELLOW}Pushing development images to PBBG.com Docker Hub${NC}"
   docker-compose push
