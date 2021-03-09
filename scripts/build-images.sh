@@ -52,9 +52,7 @@ fi
 echo $(date -u) "${CYAN}Successfully deleted production images...${NC}"
 
 if [ -n "$production" ]; then
-  echo $(date -u) "Building production images..."
-  docker-compose -f docker-compose.build-for-prod.yml build --parallel
-  echo $(date -u) "${CYAN}Successfully built production  images${NC}"
+  echo $(date -u) "${CYAN}Nothing to build for production - TODO once PROD is ready!${NC}"
 else
   echo $(date -u) "Building development images..."
   docker-compose build --parallel

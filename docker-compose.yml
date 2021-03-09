@@ -2,18 +2,17 @@ version: "3.8"
 services:
   database:
     build:
-      args:
-        MYSQL_DATABASE: ${DB_DATABASE}
-        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-        MYSQL_PASSWORD: ${DB_PASSWORD}
-        MYSQL_USER: ${DB_USERNAME}
-        SERVICE_TAGS: dev
-        SERVICE_NAME: database
       context: ./database
       dockerfile: Dockerfile
     image: docker.io/pbbg/database:master
     container_name: database
-    restart: on-failure
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - SERVICE_TAGS=dev
+      - SERVICE_NAME=database
     volumes:
       - ./database:/docker-entrypoint-initdb.d
   backend:
@@ -22,31 +21,19 @@ services:
       dockerfile: Dockerfile
     image: docker.io/pbbg/backend:master
     container_name: backend
-    restart: on-failure
-    depends_on:
-      - database
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     image: docker.io/pbbg/frontend:master
     container_name: frontend
-    restart: on-failure
-    depends_on:
-      - database
-      - backend
   proxy:
     build:
       context: ./proxy
       dockerfile: Dockerfile
     image: docker.io/pbbg/proxy:master
     container_name: proxy
-    restart: on-failure
     ports:
       - 80:80
     volumes:
       - ./proxy:/etc/nginx/conf.d
-    depends_on:
-      - database
-      - backend
-      - frontend

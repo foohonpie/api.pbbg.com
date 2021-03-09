@@ -1,0 +1,103 @@
+version: "3.8"
+services:
+  database:
+    image: docker.io/pbbg/database:release
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - SERVICE_TAGS=dev
+      - SERVICE_NAME=database
+    deploy:
+      replicas: 4
+      update_config:
+        parallelism: 2
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+  backend:
+    image: docker.io/pbbg/backend:release
+    deploy:
+      replicas: 4
+      update_config:
+        parallelism: 2
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/tests"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+  frontend:
+    image: docker.io/pbbg/frontend:release
+    deploy:
+      replicas: 4
+      update_config:
+        parallelism: 2
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    healthcheck:
+      test: [ "CMD", "wget", "http://localhost:3000" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+  proxy:
+    image: docker.io/pbbg/proxy:release
+    ports:
+      - 80:80
+    deploy:
+      replicas: 4
+      update_config:
+        parallelism: 2
+        order: start-first
+        failure_action: rollback
+        delay: 10s
+      rollback_config:
+        parallelism: 0
+        order: stop-first
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    healthcheck:
+      test: [ "CMD", "wget", "-qO-", "http://localhost" ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
