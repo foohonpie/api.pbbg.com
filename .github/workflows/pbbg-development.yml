@@ -39,16 +39,22 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           chmod 755 ./scripts/push-images.sh; ./scripts/push-images.sh --username=${{secrets.DOCKER_USER}} --password=${{secrets.DOCKER_PASSWORD}}
-      - name: Copy config and scripts to Development host
-        uses: appleboy/scp-action@master
+      - name: Copy development-stack.yml to Development host
+        uses: garygrossgarten/github-action-scp@release
         with:
+          local: development-stack.yml
+          remote: development-stack.yml
           host: ${{ secrets.PBBG_DEV_HOST }}
           username: ${{ secrets.PBBG_DEV_USERNAME }}
-          key: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
-          port: 22
-          source: "development-stack.yml,scripts/create-stack.sh"
-          target: ""
-          debug: "true"
+          privateKey: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
+      - name: Copy create-stack.sh to Development host
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: scripts/create-stack.yml
+          remote: create-stack.yml
+          host: ${{ secrets.PBBG_DEV_HOST }}
+          username: ${{ secrets.PBBG_DEV_USERNAME }}
+          privateKey: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
       - name: Deploy and Update docker stack on Development Host
         uses: appleboy/ssh-action@master
         env:
@@ -59,7 +65,6 @@ jobs:
           host: ${{ secrets.PBBG_DEV_HOST }}
           username: ${{ secrets.PBBG_DEV_USERNAME }}
           key: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
-          port: 22
           envs: DB_DATABASE,DB_PASSWORD,DB_USERNAME
           script: |
             chmod 755 ./create-stack.sh
