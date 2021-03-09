@@ -50,8 +50,8 @@ jobs:
       - name: Copy create-stack.sh to Development host
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: scripts/create-stack.yml
-          remote: create-stack.yml
+          local: scripts/create-stack.sh
+          remote: create-stack.sh
           host: ${{ secrets.PBBG_DEV_HOST }}
           username: ${{ secrets.PBBG_DEV_USERNAME }}
           privateKey: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
