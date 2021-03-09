@@ -10,7 +10,7 @@ services:
       - SERVICE_TAGS=dev
       - SERVICE_NAME=database
     deploy:
-      replicas: 4
+      replicas: 1
       update_config:
         parallelism: 2
         order: start-first
@@ -33,7 +33,7 @@ services:
   backend:
     image: docker.io/pbbg/backend:release
     deploy:
-      replicas: 4
+      replicas: 1
       update_config:
         parallelism: 2
         order: start-first
@@ -56,7 +56,7 @@ services:
   frontend:
     image: docker.io/pbbg/frontend:release
     deploy:
-      replicas: 4
+      replicas: 1
       update_config:
         parallelism: 2
         order: start-first
@@ -81,7 +81,7 @@ services:
     ports:
       - 80:80
     deploy:
-      replicas: 4
+      replicas: 1
       update_config:
         parallelism: 2
         order: start-first

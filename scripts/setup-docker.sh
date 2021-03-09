@@ -55,3 +55,11 @@ echo $(date -u) "${GREEN}Test Docker-Compose installation...${NC}"
 if sudo docker-compose --version | grep -q "docker-compose version"; then
   echo $(date -u) "${GREEN}Installation successful!${NC}"
 fi
+
+echo $(date -u) "${GREEN}Turning on docker swarm mode...${NC}"
+sudo docker swarm init --advertise-addr eth0:2377 --listen-addr eth0:2377
+
+echo $(date -u) "${GREEN}Test swarm initialized...${NC}"
+if sudo docker-compose --version | grep -q "Swarm initialized"; then
+  echo $(date -u) "${GREEN}Swarm mode enabled!${NC}"
+fi
