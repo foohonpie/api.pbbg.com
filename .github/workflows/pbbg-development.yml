@@ -48,6 +48,7 @@ jobs:
           port: 22
           source: "development-stack.yml,scripts/create-stack.sh"
           target: ""
+          debug: "true"
       - name: Deploy and Update docker stack on Development Host
         uses: appleboy/ssh-action@master
         env:
