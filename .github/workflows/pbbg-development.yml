@@ -65,6 +65,5 @@ jobs:
             export DB_DATABASE=${{ secrets.DB_DATABASE }}
             export DB_USERNAME=${{ secrets.DB_USERNAME }}
             export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-            chmod 777 /var/run/docker.sock
             chmod 755 ./create-stack.sh
             bash ./create-stack.sh --databasename=$DB_DATABASE --rootpassword=$DB_PASSWORD --username=$DB_USERNAME
