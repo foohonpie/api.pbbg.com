@@ -8,7 +8,7 @@ CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
 echo $(date -u) "==== add-user-to-docker-group.sh script ===="
-while [[ $# -gt 0 ]]; do
+while [ $# -gt 0 ]; do
   case "$1" in
     --username=*)
       username="${1#*=}"

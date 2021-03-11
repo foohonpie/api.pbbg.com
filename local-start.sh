@@ -9,15 +9,15 @@ NC='\033[0m' # No Color
 echo $(date -u) "==== local-start.sh script ===="
 
 echo $(date -u) "Bringing down running containers..."
-docker-compose down
+docker-compose -f docker-compose.local.yml down
 echo $(date -u) "${GREEN}Successfully stopped containers.${NC}"
 
 echo $(date -u) "Building development images in parallel..."
-docker-compose build --parallel
+docker-compose -f docker-compose.local.yml build --parallel
 echo $(date -u) "${GREEN}Successfully built development images.${NC}"
 
 echo $(date -u) "Starting containers..."
-docker-compose up -d
+docker-compose -f docker-compose.local.yml up
 echo $(date -u) "${GREEN}Successfully started containers.${NC}"
 
 echo $(date -u) "${YELLOW}Containers have executed their final CMD, RUN, or ENTRYPOINT commands and may not have finished installing their own dependencies.${NC}"
