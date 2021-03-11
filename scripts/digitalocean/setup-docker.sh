@@ -63,3 +63,7 @@ echo $(date -u) "${GREEN}Test swarm initialized...${NC}"
 if sudo docker-compose --version | grep -q "Swarm initialized"; then
   echo $(date -u) "${GREEN}Swarm mode enabled!${NC}"
 fi
+
+echo $(date -u) "Enabling 666 access to /var/run/docker.sock..."
+sudo chmod 666 /var/run/docker.sock
+echo $(date -u) "${GREEN}${username} has 666 access to docker.sock${NC}"

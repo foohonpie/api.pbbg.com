@@ -12,70 +12,43 @@ services:
     deploy:
       replicas: 1
       update_config:
-        parallelism: 2
-        order: start-first
+        parallelism: 0
         failure_action: rollback
-        delay: 10s
+        delay: 5s
       rollback_config:
         parallelism: 0
-        order: stop-first
       restart_policy:
-        condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+        condition: on-failure
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
-      start_period: 40s
   backend:
     image: docker.io/pbbg/backend:master
     deploy:
       replicas: 1
       update_config:
-        parallelism: 2
-        order: start-first
+        parallelism: 0
         failure_action: rollback
-        delay: 10s
+        delay: 5s
       rollback_config:
         parallelism: 0
-        order: stop-first
       restart_policy:
-        condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+        condition: on-failure
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/tests"]
-      interval: 10s
-      timeout: 10s
-      retries: 5
-      start_period: 40s
   frontend:
     image: docker.io/pbbg/frontend:master
     deploy:
       replicas: 1
       update_config:
-        parallelism: 2
-        order: start-first
+        parallelism: 0
         failure_action: rollback
-        delay: 10s
+        delay: 5s
       rollback_config:
         parallelism: 0
-        order: stop-first
       restart_policy:
-        condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+        condition: on-failure
     healthcheck:
-      test: [ "CMD", "wget", "http://localhost:3000" ]
-      interval: 10s
-      timeout: 10s
-      retries: 5
-      start_period: 40s
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
   proxy:
     image: docker.io/pbbg/proxy:master
     ports:
@@ -83,21 +56,12 @@ services:
     deploy:
       replicas: 1
       update_config:
-        parallelism: 2
-        order: start-first
+        parallelism: 0
         failure_action: rollback
-        delay: 10s
+        delay: 5s
       rollback_config:
         parallelism: 0
-        order: stop-first
       restart_policy:
-        condition: any
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+        condition: on-failure
     healthcheck:
-      test: [ "CMD", "wget", "-qO-", "http://localhost" ]
-      interval: 10s
-      timeout: 10s
-      retries: 5
-      start_period: 40s
+      test: ["CMD", "wget", "-qO-", "http://localhost"]

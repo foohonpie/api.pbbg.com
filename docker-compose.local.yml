@@ -1,0 +1,55 @@
+version: "3.8"
+networks:
+  pbbg:
+    driver: bridge
+services:
+  database:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    container_name: database
+    networks:
+      - pbbg
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_USER=${DB_USERNAME}
+      - SERVICE_TAGS=dev
+      - SERVICE_NAME=database
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    networks:
+      - pbbg
+    depends_on:
+      - database
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    networks:
+      - pbbg
+    depends_on:
+      - database
+      - backend
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    container_name: proxy
+    networks:
+      - pbbg
+    depends_on:
+      - database
+      - backend
+      - frontend
+    ports:
+      - 80:80
+    volumes:
+      - ./proxy:/etc/nginx/conf.d
