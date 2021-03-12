@@ -25,8 +25,11 @@ since all services and containers can more easily be moved as one/at once and re
 4. Run shell script located at `./local-start.sh`
 > You may need to grant 'execute script' permissions to any of the .sh scripts in this project before you can use them.
 
-After everything is started, you can find the application running on `http://localhost`, and the backend (API) is
-accessible by hitting an example endpoint at `http://localhost/api/tests`.
+After everything is started, you can find the application running on `https://localhost`, and the backend (API) is
+accessible by hitting an example endpoint at `https://localhost/api/tests`.
+> You will receive "insecure" warnings about the self-signed cert. You can either click "Proceed anyway"
+> or you can permanently enable allow insecure localhost by going here chrome://flags/#allow-insecure-localhost
+> and clicking to 'Enable'.  You'll still see the 'Not Secure', but will no longer get prompted.
 
 #### Accessing database locally
 1. Get your containers up and running (see above steps).

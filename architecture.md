@@ -160,5 +160,5 @@ to go this direction.
 4. Run shell script located at `./scripts/local-start.sh`
 > You may need to grant 'execute script' permissions to any of the .sh scripts in this project before you can use them.
 
-After everything is started, you can find the application running on `http://localhost`, and the backend (API) is
-accessible by hitting an example endpoint at `http://localhost/api/tests`.
+After everything is started, you can find the application running on `https://localhost`, and the backend (API) is
+accessible by hitting an example endpoint at `https://localhost/api/tests`.

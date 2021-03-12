@@ -44,7 +44,7 @@ services:
       - .:/workspace:cached
   proxy:
     build:
-      context: ./proxy
+      context: ./proxy/local
       dockerfile: Dockerfile
     container_name: proxy
     networks:
@@ -55,5 +55,6 @@ services:
       - frontend
     ports:
       - 80:80
+      - 443:443
     volumes:
-      - ./proxy:/etc/nginx/conf.d
+      - ./proxy/local:/etc/nginx/conf.d
