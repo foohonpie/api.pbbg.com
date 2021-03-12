@@ -28,6 +28,8 @@ services:
       - pbbg
     depends_on:
       - database
+    volumes:
+      - .:/workspace:cached
   frontend:
     build:
       context: ./frontend
@@ -38,6 +40,8 @@ services:
     depends_on:
       - database
       - backend
+    volumes:
+      - .:/workspace:cached
   proxy:
     build:
       context: ./proxy

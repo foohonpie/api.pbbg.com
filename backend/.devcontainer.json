@@ -1,0 +1,19 @@
+{
+    "name": "PBBG.com Backend",
+    "dockerComposeFile": "../docker-compose.local.yml",
+    "remoteUser": "root",
+    "workspaceFolder": "/workspace/backend",
+    "service": "backend",
+    "extensions": [
+        "mikestead.dotenv",
+        "eamodio.gitlens",
+        "onecentlin.laravel-blade",
+        "neilbrayfield.php-docblocker",
+        "bmewburn.vscode-intelephense-client",
+        "ikappas.phpcs",
+        "calebporzio.better-phpunit",
+        "felixfbecker.php-debug",
+    ],
+    "shutdownAction": "none",
+    "postCreateCommand": "uname -a"
+}

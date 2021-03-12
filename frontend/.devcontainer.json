@@ -1,0 +1,15 @@
+{
+    "name": "PBBG.com Frontend",
+    "dockerComposeFile": "../docker-compose.local.yml",
+    "remoteUser": "root",
+    "workspaceFolder": "/workspace/frontend",
+    "service": "frontend",
+    "extensions": [
+        "eamodio.gitlens",
+        "octref.vetur",
+        "dbaeumer.vscode-eslint",
+        "wix.vscode-import-cost"
+    ],
+    "shutdownAction": "none",
+    "postCreateCommand": "uname -a"
+}
