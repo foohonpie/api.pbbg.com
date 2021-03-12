@@ -27,3 +27,11 @@ since all services and containers can more easily be moved as one/at once and re
 
 After everything is started, you can find the application running on `http://localhost`, and the backend (API) is
 accessible by hitting an example endpoint at `http://localhost/api/tests`.
+
+## Using VSCode?
+Because the containers are isolated, you will need to open a new window if you wish to edit the frontend and backend simultaneously.
+
+1. Install 'Remote Containers' and 'Remote Development' extensions. This allows for editing a project inside a Docker container.
+2. Open VSCode and select "Remote Containers: Open Folder from Container" from the Command Palette.
+3. Select either the `frontend` or `backend` folder. This will boot up the entire project from the `docker-compose.local.yml` file and then attach you to the appropriate folder.
+4. If you want to open the other folder, repeat Step 3. This will attach you to the already-running containers.
