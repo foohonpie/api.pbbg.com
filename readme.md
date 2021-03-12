@@ -28,6 +28,12 @@ since all services and containers can more easily be moved as one/at once and re
 After everything is started, you can find the application running on `http://localhost`, and the backend (API) is
 accessible by hitting an example endpoint at `http://localhost/api/tests`.
 
+#### Accessing database locally
+1. Get your containers up and running (see above steps).
+2. Run `docker inspect database`
+3. At the end of the output, you'll see a `Networks` section, showing `pbbgcom_pbbg` as the network.
+4. Use the `IPAddress` value, along with your `.env` credentials, to connect to the database from your host machine.
+
 ## Using VSCode?
 Because the containers are isolated, you will need to open a new window if you wish to edit the frontend and backend simultaneously.
 
