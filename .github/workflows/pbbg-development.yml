@@ -77,4 +77,4 @@ jobs:
             chmod 755 ./create-stack.sh
             bash ./create-stack.sh --databasename=$DB_DATABASE --rootpassword=$DB_PASSWORD --username=$DB_USERNAME
             chmod 755 ./init-letsencrypt.sh
-            bash ./init-letsencrypt.sh --domains=dev.pbbg.com --email_address=swctholmeso@gmail.com --nginx-container=proxy --certbot_container=certbot --data_path="./data/certbot" --compose-override=development-stack.yml
+            bash ./init-letsencrypt.sh --domains=dev.pbbg.com --email_address=swctholmeso@gmail.com --nginx_container=proxy --certbot_container=certbot --data_path="./data/certbot" --compose_override=development-stack.yml
