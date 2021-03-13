@@ -59,13 +59,13 @@ jobs:
           username: ${{ secrets.PBBG_PROD_USERNAME }}
           privateKey: ${{ secrets.PBBG_PROD_PRIVATE_KEY }}
       - name: Copy init-letsencrypt.sh to Production host
-          uses: garygrossgarten/github-action-scp@release
-          with:
-            local: scripts/init-letsencrypt.sh
-            remote: init-letsencrypt.sh
-            host: ${{ secrets.PBBG_PROD_HOST }}
-            username: ${{ secrets.PBBG_PROD_USERNAME }}
-            privateKey: ${{ secrets.PBBG_PROD_PRIVATE_KEY }}
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: scripts/init-letsencrypt.sh
+          remote: init-letsencrypt.sh
+          host: ${{ secrets.PBBG_PROD_HOST }}
+          username: ${{ secrets.PBBG_PROD_USERNAME }}
+          privateKey: ${{ secrets.PBBG_PROD_PRIVATE_KEY }}
       - name: Deploy and Update docker stack on Production Host
         uses: appleboy/ssh-action@master
         with:
