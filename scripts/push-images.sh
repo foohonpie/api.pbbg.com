@@ -2,8 +2,13 @@
 set -e
 # IMPORTANT: this script is intended to be used during the Github Actions build steps (using secret credentials)
 # This script pushes existing images to Docker Hub
-# Development Usage: ./push-images.sh --username=myUserName --password=myPassword
-# Production Usage: ./push-images.sh --username=myUserName --password=myPassword --production=true
+# Development Usage: ./push-images.sh
+#                         --username=myUserName
+#                         --password=myPassword
+# Production Usage: ./push-images.sh
+#                         --username=myUserName
+#                         --password=myPassword
+#                         --production=true
 
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'

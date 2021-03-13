@@ -55,6 +55,14 @@ jobs:
           host: ${{ secrets.PBBG_DEV_HOST }}
           username: ${{ secrets.PBBG_DEV_USERNAME }}
           privateKey: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
+      - name: Copy init-letsencrypt.sh to Development host
+          uses: garygrossgarten/github-action-scp@release
+          with:
+            local: scripts/init-letsencrypt.sh
+            remote: init-letsencrypt.sh
+            host: ${{ secrets.PBBG_DEV_HOST }}
+            username: ${{ secrets.PBBG_DEV_USERNAME }}
+            privateKey: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
       - name: Deploy and Update docker stack on Development Host
         uses: appleboy/ssh-action@master
         with:
@@ -68,3 +76,5 @@ jobs:
             docker system prune --all --force
             chmod 755 ./create-stack.sh
             bash ./create-stack.sh --databasename=$DB_DATABASE --rootpassword=$DB_PASSWORD --username=$DB_USERNAME
+            chmod 755 ./init-letsencrypt.sh
+            bash ./init-letsencrypt.sh --domains=dev.pbbg.com --email_address=swctholmeso@gmail.com --nginx-container=proxy --certbot_container=certbot --data_path="./data/certbot" --compose-override=development-stack.yml

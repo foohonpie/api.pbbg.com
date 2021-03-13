@@ -42,31 +42,41 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           chmod 755 ./scripts/push-images.sh; ./scripts/push-images.sh --username=${{secrets.DOCKER_USER}} --password=${{secrets.DOCKER_PASSWORD}} --production=true
-      - name: Copy development-stack.yml to Development host
+      - name: Copy production-stack.yml to Production host
         uses: garygrossgarten/github-action-scp@release
         with:
           local: production-stack.yml
           remote: production-stack.yml
-          host: ${{ secrets.PBBG_DEV_HOST }}
-          username: ${{ secrets.PBBG_DEV_USERNAME }}
-          privateKey: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
-      - name: Copy create-stack.sh to Development host
+          host: ${{ secrets.PBBG_PROD_HOST }}
+          username: ${{ secrets.PBBG_PROD_USERNAME }}
+          privateKey: ${{ secrets.PBBG_PROD_PRIVATE_KEY }}
+      - name: Copy create-stack.sh to Production host
         uses: garygrossgarten/github-action-scp@release
         with:
           local: scripts/create-stack.sh
           remote: create-stack.sh
-          host: ${{ secrets.PBBG_DEV_HOST }}
-          username: ${{ secrets.PBBG_DEV_USERNAME }}
-          privateKey: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
-      - name: Deploy and Update docker stack on Development Host
+          host: ${{ secrets.PBBG_PROD_HOST }}
+          username: ${{ secrets.PBBG_PROD_USERNAME }}
+          privateKey: ${{ secrets.PBBG_PROD_PRIVATE_KEY }}
+      - name: Copy init-letsencrypt.sh to Production host
+          uses: garygrossgarten/github-action-scp@release
+          with:
+            local: scripts/init-letsencrypt.sh
+            remote: init-letsencrypt.sh
+            host: ${{ secrets.PBBG_PROD_HOST }}
+            username: ${{ secrets.PBBG_PROD_USERNAME }}
+            privateKey: ${{ secrets.PBBG_PROD_PRIVATE_KEY }}
+      - name: Deploy and Update docker stack on Production Host
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.PBBG_DEV_HOST }}
-          username: ${{ secrets.PBBG_DEV_USERNAME }}
-          key: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
+          host: ${{ secrets.PBBG_PROD_HOST }}
+          username: ${{ secrets.PBBG_PROD_USERNAME }}
+          key: ${{ secrets.PBBG_PROD_PRIVATE_KEY }}
           script: |
             export DB_DATABASE=${{ secrets.DB_DATABASE }}
             export DB_USERNAME=${{ secrets.DB_USERNAME }}
             export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             chmod 755 ./create-stack.sh
             bash ./create-stack.sh --databasename=$DB_DATABASE --rootpassword=$DB_PASSWORD --username=$DB_USERNAME --production=true
+            chmod 755 ./init-letsencrypt.sh
+            bash ./init-letsencrypt.sh --domains="www.pbbg.com" --email_address=swctholmeso@gmail.com --nginx-container=proxy --certbot_container=certbot --data_path="./data/certbot" --compose-override=production-stack.yml

@@ -1,8 +1,15 @@
 #!/bin/bash
 set -e
 # This bash script creates a docker stack according to the docker-compose configuration
-# Development Usage: ./create-stack.sh --databasename=someString --rootpassword=someString --username=someString
-## Production Usage: ./create-stack.sh --databasename=someString --rootpassword=someString --username=someString --production=true
+# Development Usage: ./create-stack.sh
+#                         --databasename=someString
+#                         --rootpassword=someString
+#                         --username=someString
+## Production Usage: ./create-stack.sh
+#                         --databasename=someString
+#                         --rootpassword=someString
+#                         --username=someString
+#                         --production=true
 
 
 

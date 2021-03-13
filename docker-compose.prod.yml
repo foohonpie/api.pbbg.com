@@ -13,6 +13,8 @@ services:
       - MYSQL_USER=${DB_USERNAME}
       - SERVICE_TAGS=dev
       - SERVICE_NAME=database
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
   backend:
     build:
       context: ./backend
@@ -27,7 +29,7 @@ services:
     container_name: frontend
   proxy:
     build:
-      context: ./proxy/dev
+      context: ./proxy/prod
       dockerfile: Dockerfile
     image: docker.io/pbbg/proxy:master
     container_name: proxy
@@ -41,8 +43,9 @@ services:
     build:
       context: ./certbot
       dockerfile: Dockerfile
-    image: docker.io/pbbg/certbot:master
+    image: docker.io/pbbg/certbot:release
     container_name: certbot
     volumes:
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
+

@@ -21,4 +21,4 @@ docker-compose -f docker-compose.local.yml up
 echo $(date -u) "${GREEN}Successfully started containers.${NC}"
 
 echo $(date -u) "${YELLOW}Containers have executed their final CMD, RUN, or ENTRYPOINT commands and may not have finished installing their own dependencies.${NC}"
-echo $(date -u) "${GREEN}Proxy entry should be accessible on host machine at http://localhost${NC}"
+echo $(date -u) "${GREEN}Proxy entry should be accessible on host machine at https://localhost${NC}"

@@ -1,7 +1,8 @@
 #!/bin/sh
 set -e
 # This script adds a user to the docker group with permissions to use docker
-# Development Usage: ./add-user-to-docker-group.sh --username=myUsername
+# Usage: ./add-user-to-docker-group.sh --username=myUsername
+
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 CYAN='\033[1;36m'
