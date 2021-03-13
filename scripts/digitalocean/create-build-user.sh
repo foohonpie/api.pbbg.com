@@ -1,7 +1,9 @@
 #!/bin/sh
 set -e
 # This script creates a new user for the docker swarm and build operation in Linux OS
-# Development Usage: ./create-build-user.sh --username=myUsername --password=myPassword
+# Usage: ./create-build-user.sh
+#              --username=myUsername
+#              --password=myPassword
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 CYAN='\033[1;36m'

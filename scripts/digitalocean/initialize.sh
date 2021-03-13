@@ -27,7 +27,9 @@ set -e
 # PARAM username : the username of the to-be-created superuser
 # PARAM password : the password of the to-be-created superuser
 #
-# Production Usage: ./initialize.sh --username=myUsername --password=myPassword
+# Usage: ./initialize.sh
+#             --username=myUsername
+#             --password=myPassword
 
 GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
