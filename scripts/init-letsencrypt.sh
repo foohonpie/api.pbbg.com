@@ -14,7 +14,7 @@ YELLOW='\033[1;33m'
 CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
-echo $(date -u) "==== lets-encrypt.sh script ===="
+echo $(date -u) "==== init-letsencrypt.sh script ===="
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --domains=*)
@@ -94,6 +94,7 @@ docker-compose -f ${compose_override} run --rm --entrypoint "\
     ${domain_args} \
     --rsa-key-size ${rsa_key_size} \
     --agree-tos \
+    --no-eff-email \
     --force-renewal" ${certbot_container}
 echo
 
