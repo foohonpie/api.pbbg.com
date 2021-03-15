@@ -53,10 +53,8 @@ services:
     image: docker.io/pbbg/proxy:master
     ports:
       - 80:80
-      - 443:443
     volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
+      - ./certs:/etc/letsencrypt
     deploy:
       replicas: 1
       update_config:
@@ -70,10 +68,21 @@ services:
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost"]
   certbot:
-    image: docker.io/pbbg/certbot:master
+    image: ebarault/letsencrypt-autorenew-docker:latest
+    environment:
+      - LOGFILE=/var/log/letsencrypt/certrenewal.log
+      - DEBUG=false
+      - STAGING=false
+      - DOMAINS=dev.pbbg.com
+      - EMAIL=swctholmeso@gmail.com
+      - CONCAT=false
+      - HEALTH_CHECK_URL=dev.pbbg.com:80
+    ports:
+      - 443:443
     volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
+      - ./certs:/certs
+      - ./letsencrypt:/etc/letsencrypt
+      - ./var_log_letsencrypt:/var/log/letsencrypt
     deploy:
       replicas: 1
       update_config:
@@ -85,4 +94,4 @@ services:
       restart_policy:
         condition: on-failure
     healthcheck:
-      test: [ "CMD", "exit", "0" ]
+      test: [ "CMD", "curl", "-s", "-L", "--head", "--fail", "-o", "/dev/null", "-w", "'%{http_code}\n'", "--connect-timeout", "3", "--max-time", "5", "http://dev.pbbg.com:80" ]
