@@ -58,14 +58,6 @@ jobs:
           host: ${{ secrets.PBBG_PROD_HOST }}
           username: ${{ secrets.PBBG_PROD_USERNAME }}
           privateKey: ${{ secrets.PBBG_PROD_PRIVATE_KEY }}
-      - name: Copy init-letsencrypt.sh to Production host
-          uses: garygrossgarten/github-action-scp@release
-          with:
-            local: scripts/init-letsencrypt.sh
-            remote: init-letsencrypt.sh
-            host: ${{ secrets.PBBG_PROD_HOST }}
-            username: ${{ secrets.PBBG_PROD_USERNAME }}
-            privateKey: ${{ secrets.PBBG_PROD_PRIVATE_KEY }}
       - name: Deploy and Update docker stack on Production Host
         uses: appleboy/ssh-action@master
         with:
@@ -78,5 +70,3 @@ jobs:
             export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             chmod 755 ./create-stack.sh
             bash ./create-stack.sh --databasename=$DB_DATABASE --rootpassword=$DB_PASSWORD --username=$DB_USERNAME --production=true
-            chmod 755 ./init-letsencrypt.sh
-            bash ./init-letsencrypt.sh --domains="www.pbbg.com" --email_address=swctholmeso@gmail.com --nginx-container=proxy --certbot_container=certbot --data_path="./data/certbot" --compose-override=production-stack.yml

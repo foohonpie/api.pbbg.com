@@ -35,17 +35,3 @@ services:
     container_name: proxy
     ports:
       - 80:80
-      - 443:443
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-  certbot:
-    build:
-      context: ./certbot
-      dockerfile: Dockerfile
-    image: docker.io/pbbg/certbot:release
-    container_name: certbot
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-

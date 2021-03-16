@@ -8,7 +8,3 @@ COPY . /etc/nginx/conf.d
 
 # For documentation to developers - EXPOSE command doesn't actually do anything, but tells what should be made open
 EXPOSE 80
-EXPOSE 443
-
-# Check every 6 hours for a new Let's Encrypt cert and auto-renew
-CMD /bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'

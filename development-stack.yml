@@ -53,12 +53,8 @@ services:
     image: docker.io/pbbg/proxy:master
     ports:
       - 80:80
-      - 443:443
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
     deploy:
-      replicas: 1
+      mode: global
       update_config:
         parallelism: 0
         failure_action: rollback
@@ -69,20 +65,3 @@ services:
         condition: on-failure
     healthcheck:
       test: ["CMD", "wget", "-qO-", "http://localhost"]
-  certbot:
-    image: docker.io/pbbg/certbot:master
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 0
-        failure_action: rollback
-        delay: 5s
-      rollback_config:
-        parallelism: 0
-      restart_policy:
-        condition: on-failure
-    healthcheck:
-      test: [ "CMD", "exit", "0" ]
