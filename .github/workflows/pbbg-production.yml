@@ -42,6 +42,14 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           chmod 755 ./scripts/push-images.sh; ./scripts/push-images.sh --username=${{secrets.DOCKER_USER}} --password=${{secrets.DOCKER_PASSWORD}} --production=true
+      - name: Copy certs-data to Production host
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: proxy/prod/certs-data
+          remote: certs-data
+          host: ${{ secrets.PBBG_PROD_HOST }}
+          username: ${{ secrets.PBBG_PROD_USERNAME }}
+          privateKey: ${{ secrets.PBBG_PROD_PRIVATE_KEY }}
       - name: Copy production-stack.yml to Production host
         uses: garygrossgarten/github-action-scp@release
         with:

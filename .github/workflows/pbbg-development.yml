@@ -39,6 +39,14 @@ jobs:
           DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
         run: |
           chmod 755 ./scripts/push-images.sh; ./scripts/push-images.sh --username=${{secrets.DOCKER_USER}} --password=${{secrets.DOCKER_PASSWORD}}
+      - name: Copy certs-data to Development host
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: proxy/dev/certs-data
+          remote: certs-data
+          host: ${{ secrets.PBBG_DEV_HOST }}
+          username: ${{ secrets.PBBG_DEV_USERNAME }}
+          privateKey: ${{ secrets.PBBG_DEV_PRIVATE_KEY }}
       - name: Copy development-stack.yml to Development host
         uses: garygrossgarten/github-action-scp@release
         with:

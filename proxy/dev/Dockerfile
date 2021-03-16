@@ -10,3 +10,4 @@ COPY . /etc/nginx/conf.d
 
 # For documentation to developers - EXPOSE command doesn't actually do anything, but tells what should be made open
 EXPOSE 80
+EXPOSE 443
