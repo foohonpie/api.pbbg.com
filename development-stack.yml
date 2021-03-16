@@ -53,8 +53,10 @@ services:
     image: docker.io/pbbg/proxy:master
     ports:
       - 80:80
+    volumes:
+      - /root/certs-data/:/data/letsencrypt/
     deploy:
-      mode: global
+      replicas: 1
       update_config:
         parallelism: 0
         failure_action: rollback

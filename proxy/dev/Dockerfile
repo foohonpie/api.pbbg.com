@@ -1,5 +1,7 @@
 FROM nginx:1.18.0-alpine
 
+RUN apk add python3 python3-dev py3-pip build-base libressl-dev musl-dev libffi-dev certbot certbot-nginx
+
 # Set working directory
 WORKDIR /etc/nginx/conf.d
 
