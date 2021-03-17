@@ -38,6 +38,10 @@ RUN composer update \
 # For documentation to developers - EXPOSE command doesn't actually do anything, but tells what should be made open
 EXPOSE 8000
 
+# The script to prepare Laravel for production use
+#RUN chmod +x /var/www/docker-entrypoint.sh
+#ENTRYPOINT ["/var/www/docker-entrypoint.sh"]
+
 # If you do not specify host of 0.0.0.0 then the default (localhost or 127.0.0.1) will
 # NOT be accessible from within the docker network and all /backend/xxx requests will 502
 CMD bash -c "php artisan serve --host=0.0.0.0 --port=8000"
