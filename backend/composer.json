@@ -11,6 +11,7 @@
         "php": "^8.0",
         "fideloper/proxy": "^4.4",
         "guzzlehttp/guzzle": "^7.0.1",
+        "laravel/fortify": "^1.7",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.5"
     },
