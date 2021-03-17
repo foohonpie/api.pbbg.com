@@ -44,3 +44,6 @@ Because the containers are isolated, you will need to open a new window if you w
 2. Open VSCode and select "Remote Containers: Open Folder from Container" from the Command Palette.
 3. Select either the `frontend` or `backend` folder. This will boot up the entire project from the `docker-compose.local.yml` file and then attach you to the appropriate folder.
 4. If you want to open the other folder, repeat Step 3. This will attach you to the already-running containers.
+
+## DevOps stuff
+Need to do Cert/SSL related things? [Read this](ssl-cert-setup.md).

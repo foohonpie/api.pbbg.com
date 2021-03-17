@@ -55,10 +55,11 @@ services:
       - 80:80
       - 443:443
     volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./certs-data/:/data/letsencrypt/
       - /etc/letsencrypt/:/etc/letsencrypt/
     deploy:
-      replicas: 1
+      mode: 'global'
       update_config:
         parallelism: 0
         failure_action: rollback
@@ -68,4 +69,4 @@ services:
       restart_policy:
         condition: on-failure
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost"]
+      test: ["CMD", "curl", "-f", "http://localhost"]
