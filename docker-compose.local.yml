@@ -1,22 +1,16 @@
 version: "3.8"
-networks:
-  pbbg:
-    driver: bridge
 services:
   database:
     build:
       context: ./database
       dockerfile: Dockerfile
     container_name: database
-    networks:
-      - pbbg
     environment:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_USER=${DB_USERNAME}
-      - SERVICE_TAGS=dev
-      - SERVICE_NAME=database
+    restart: always
   backend:
     build:
       context: ./backend
@@ -35,10 +29,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - APP_ENV=dev
       - APP_DEBUG=true
-    networks:
-      - pbbg
-    depends_on:
-      - database
+    restart: always
     volumes:
       - .:/workspace:cached
   frontend:
@@ -46,11 +37,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: frontend
-    networks:
-      - pbbg
-    depends_on:
-      - database
-      - backend
+    restart: always
     volumes:
       - .:/workspace:cached
   proxy:
@@ -58,12 +45,7 @@ services:
       context: ./proxy/local
       dockerfile: Dockerfile
     container_name: proxy
-    networks:
-      - pbbg
-    depends_on:
-      - database
-      - backend
-      - frontend
+    restart: always
     ports:
       - 80:80
       - 443:443
