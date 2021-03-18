@@ -1,33 +1,35 @@
 version: "3.8"
-networks:
-  pbbg:
-    driver: bridge
 services:
   database:
     build:
       context: ./database
       dockerfile: Dockerfile
     container_name: database
-    networks:
-      - pbbg
     environment:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_PASSWORD=${DB_PASSWORD}
       - MYSQL_USER=${DB_USERNAME}
-      - SERVICE_TAGS=dev
-      - SERVICE_NAME=database
-    volumes:
-      - ./database:/docker-entrypoint-initdb.d
+    restart: always
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: backend
-    networks:
-      - pbbg
-    depends_on:
-      - database
+    environment:
+      - APP_URL=${APP_URL}
+      - APP_NAME=${APP_NAME}
+      - APP_KEY=${APP_KEY}
+      - LOG_CHANNEL=${LOG_CHANNEL}
+      - DB_CONNECTION=${DB_CONNECTION}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - APP_ENV=dev
+      - APP_DEBUG=true
+    restart: always
     volumes:
       - .:/workspace:cached
   frontend:
@@ -35,11 +37,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: frontend
-    networks:
-      - pbbg
-    depends_on:
-      - database
-      - backend
+    restart: always
     volumes:
       - .:/workspace:cached
   proxy:
@@ -47,12 +45,7 @@ services:
       context: ./proxy/local
       dockerfile: Dockerfile
     container_name: proxy
-    networks:
-      - pbbg
-    depends_on:
-      - database
-      - backend
-      - frontend
+    restart: always
     ports:
       - 80:80
       - 443:443
