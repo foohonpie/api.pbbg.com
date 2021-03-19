@@ -12,6 +12,9 @@ RUN yarn --frozen-lockfile
 # Copy in frontend files to run
 COPY . .
 
+# Lint source code and fail if issues
+RUN yarn lint || exit 1
+
 # For documentation to developers - EXPOSE command doesn't actually do anything, but tells what should be made open
 EXPOSE 3000
 
