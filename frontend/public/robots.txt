@@ -1,0 +1,3 @@
+Sitemap: https://dev.pbbg.com/sitemap.xml
+User-agent: *
+Disallow:

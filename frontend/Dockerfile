@@ -12,8 +12,11 @@ RUN yarn --frozen-lockfile
 # Copy in frontend files for build
 COPY . .
 
+# Lint source code and fail if issues
+RUN yarn lint || exit 1
+
 # Build Vue app to create /dist folder
-RUN yarn run build
+RUN yarn build
 
 # Final stage build
 FROM node:lts-alpine

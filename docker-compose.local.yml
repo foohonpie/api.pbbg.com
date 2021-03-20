@@ -35,10 +35,11 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.local
     container_name: frontend
     restart: always
     volumes:
+      - ./frontend:/app
       - .:/workspace:cached
   proxy:
     build:
