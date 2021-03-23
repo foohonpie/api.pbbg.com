@@ -1,12 +1,15 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
-  </div>
+  <base-layout>
+    <h1>About Us</h1>
+  </base-layout>
 </template>
 
 <script>
 export default {
   name: 'About',
+  components: {
+    BaseLayout: () => import('../layouts/BaseLayout.vue'),
+  },
   metaInfo: { title: 'About Us' },
 }
 </script>

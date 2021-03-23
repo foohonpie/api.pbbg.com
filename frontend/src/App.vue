@@ -1,36 +1,10 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="PBBG Logo"
-          class="shrink mr-2"
-          contain
-          :src="require('./assets/logo.png')"
-          transition="scale-transition"
-          width="40"
-        />
-        <div
-            alt="PBBG Name"
-            class="shrink mt-1 hidden-sm-and-down"
-        >Persistent Browser Based Games</div>
-      </div>
-
-      <v-spacer />
-
-      <v-btn text>
-        <span class="mr-2">Login</span>
-        <v-icon>mdi-login</v-icon>
-      </v-btn>
-    </v-app-bar>
-
+    <nav-bar />
     <v-main>
       <router-view />
     </v-main>
+    <footer-bar />
   </v-app>
 </template>
 
@@ -45,6 +19,10 @@ const siteTitleAndTitleDescription = metaSiteTitle + metaDelimiter + metaSiteTit
 
 export default {
   name: 'App',
+  components: {
+    NavBar: () => import('./components/NavBar.vue'),
+    FooterBar: () => import('./components/FooterBar.vue'),
+  },
   data: () => ({}),
   metaInfo: {
     title: `${metaSiteTitle}`,
