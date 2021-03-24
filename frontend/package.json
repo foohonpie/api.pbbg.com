@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port 3000",
-    "build": "yarn sitemap && vue-cli-service build",
-    "lint": "vue-cli-service lint  --no-fix",
-    "lint:fix": "vue-cli-service lint",
-    "test:e2e": "vue-cli-service test:e2e",
-    "sitemap": "vue-cli-service sitemap"
+    "serve": "./node_modules/.bin/vue-cli-service serve --port 3000",
+    "build": "yarn sitemap && ./node_modules/.bin/vue-cli-service build",
+    "lint": "./node_modules/.bin/vue-cli-service lint  --no-fix",
+    "lint:fix": "./node_modules/.bin/vue-cli-service lint",
+    "test:e2e": "./node_modules/.bin/vue-cli-service test:e2e",
+    "sitemap": "./node_modules/.bin/vue-cli-service sitemap"
   },
   "dependencies": {
     "core-js": "^3.6.5",
