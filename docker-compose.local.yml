@@ -41,6 +41,7 @@ services:
     volumes:
       - ./frontend:/app
       - .:/workspace:cached
+      - /app/node_modules
   proxy:
     build:
       context: ./proxy/local
