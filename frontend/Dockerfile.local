@@ -1,19 +1,15 @@
 FROM node:lts-alpine
 
 # Set working directory
+RUN mkdir -p /app
 WORKDIR /app
 
-# Copy files for package dependency installation
-COPY package.json .
-COPY yarn.lock .
+# Copy in frontend files
+COPY . /app
 
-RUN yarn --frozen-lockfile
-
-# Copy in frontend files to run
-COPY . .
-
-# Lint source code and fail if issues
-RUN yarn lint || exit 1
+# Install dependencies, lint (error if fails lint), build, and clean yarn cache to reduce image size
+RUN yarn && \
+    yarn lint || exit 1
 
 # For documentation to developers - EXPOSE command doesn't actually do anything, but tells what should be made open
 EXPOSE 3000
