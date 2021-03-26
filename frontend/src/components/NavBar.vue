@@ -5,12 +5,14 @@
     app
   >
     <div class="d-flex align-center">
-      <v-img
-        :src="require('../assets/logo.png')"
-        width="2.5rem"
-        alt="PBBG Logo"
-        contain
-      />
+      <router-link to="/">
+        <v-img
+          :src="require('../assets/logo.png')"
+          width="2.5rem"
+          alt="PBBG Logo"
+          contain
+        />
+      </router-link>
       <div class="hidden-sm-and-down">
         Persistent Browser Based Games
       </div>
@@ -18,7 +20,10 @@
 
     <v-spacer />
 
-    <v-btn text>
+    <v-btn
+      text
+      to="Login"
+    >
       <span>Login</span>
       <v-icon>mdi-login</v-icon>
     </v-btn>
