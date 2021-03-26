@@ -1,7 +1,5 @@
 <template>
-  <v-container>
-    <v-row>
-      <slot />
-    </v-row>
+  <v-container fill-height>
+    <slot />
   </v-container>
 </template>
