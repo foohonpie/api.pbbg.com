@@ -1,3 +1,5 @@
+import store, { SUBMITTED_USER_LOGIN_ACTION } from './store'
+
 const EMAIL = 'Email'
 const PASSWORD = 'Password'
 
@@ -56,8 +58,7 @@ export const userLoginForm = {
     buttonText: 'Submit',
     disableWhenInvalidForm: true,
     clickHandler: (formModels) => {
-      // TODO do something with formModels
-      console.log(formModels)
+      store.dispatch(SUBMITTED_USER_LOGIN_ACTION, formModels)
     },
   }],
 }

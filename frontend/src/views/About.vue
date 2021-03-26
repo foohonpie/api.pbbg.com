@@ -8,7 +8,7 @@
 export default {
   name: 'About',
   components: {
-    BaseLayout: () => import('../layouts/BaseLayout.vue'),
+    BaseLayout: () => import('./layouts/BaseLayout.vue'),
   },
   metaInfo: { title: 'About Us' },
 }

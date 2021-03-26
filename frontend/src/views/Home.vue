@@ -17,7 +17,7 @@
 export default {
   name: 'Home',
   components: {
-    BaseLayout: () => import('../layouts/BaseLayout.vue'),
+    BaseLayout: () => import('./layouts/BaseLayout.vue'),
   },
   metaInfo: { title: 'PBBG.com' },
 }

@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import { userLoginForm } from '../services/formDescriptors'
+import { userLoginForm } from '../formDescriptors'
 
 export default {
   name: 'Login',
   metaInfo: { title: 'Login' },
   components: {
-    BaseLayout: () => import('../layouts/BaseLayout.vue'),
+    BaseLayout: () => import('./layouts/BaseLayout.vue'),
     FormGenerator: () => import('../components/FormGenerator.vue'),
   },
   data: () => ({
