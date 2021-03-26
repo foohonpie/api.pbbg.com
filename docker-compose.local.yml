@@ -14,7 +14,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.local
     container_name: backend
     environment:
       - APP_URL=${APP_URL}
@@ -31,7 +31,9 @@ services:
       - APP_DEBUG=true
     restart: always
     volumes:
+      - ./backend:/var/www
       - .:/workspace:cached
+      - /var/www/vendor
   frontend:
     build:
       context: ./frontend
