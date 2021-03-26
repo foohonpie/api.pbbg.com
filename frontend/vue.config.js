@@ -1,3 +1,5 @@
+const { routes } = require('./src/router/routes.js')
+
 module.exports = {
   lintOnSave: false,
 
@@ -14,10 +16,8 @@ module.exports = {
   pluginOptions: {
     sitemap: {
       outputDir: './public',
-      urls: [
-        'https://dev.pbbg.com/',
-        'https://dev.pbbg.com/about',
-      ],
+      baseURL: 'https://dev.pbbg.com',
+      routes,
     },
   },
 }
