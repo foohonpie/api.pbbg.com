@@ -21,17 +21,29 @@
     <v-spacer />
 
     <v-btn
+      v-if="$route.name !== $options.LOGIN_ROUTE"
       text
       to="Login"
     >
       <span>Login</span>
       <v-icon>mdi-login</v-icon>
     </v-btn>
+    <v-btn
+      v-else
+      text
+      to="Register"
+    >
+      <span>Register</span>
+      <v-icon>mdi-register</v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 
 <script>
+const { LOGIN_ROUTE } = require('@/router/routes')
+
 export default {
+  LOGIN_ROUTE,
   data: () => ({}),
 }
 </script>
