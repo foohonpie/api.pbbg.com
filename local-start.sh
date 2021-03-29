@@ -12,13 +12,5 @@ echo $(date -u) "Bringing down running containers..."
 docker-compose -f docker-compose.local.yml down
 echo $(date -u) "${GREEN}Successfully stopped containers.${NC}"
 
-echo $(date -u) "Building development images in parallel..."
-docker-compose -f docker-compose.local.yml build --parallel
-echo $(date -u) "${GREEN}Successfully built development images.${NC}"
-
-echo $(date -u) "Starting containers..."
-docker-compose -f docker-compose.local.yml up
-echo $(date -u) "${GREEN}Successfully started containers.${NC}"
-
-echo $(date -u) "${YELLOW}Containers have executed their final CMD, RUN, or ENTRYPOINT commands and may not have finished installing their own dependencies.${NC}"
-echo $(date -u) "${GREEN}Proxy entry should be accessible on host machine at https://localhost${NC}"
+echo $(date -u) "Building development images and starting containers..."
+docker-compose -f docker-compose.local.yml up --build

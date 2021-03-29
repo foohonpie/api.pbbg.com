@@ -13,8 +13,8 @@ services:
     restart: always
   backend:
     build:
-      context: ./backend
-      dockerfile: Dockerfile.local
+      context: .
+      dockerfile: ./backend/Dockerfile.local
     container_name: backend
     environment:
       - APP_URL=${APP_URL}
