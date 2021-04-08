@@ -22,7 +22,7 @@ class LoginTest extends BaseTest
     /** @test */
     public function successfully_login()
     {
-        $response = $this->postJson('/login', [
+        $response = $this->postJson('/api/login', [
             'email' => 'testuser@example.com',
             'password' => 'pAsSwOrD',
         ]);
@@ -34,7 +34,7 @@ class LoginTest extends BaseTest
     /** @test */
     public function incorrect_credentials()
     {
-        $response = $this->postJson('/login', [
+        $response = $this->postJson('/api/login', [
             'email' => 'testuser@example.com',
             'password' => 'wrong password',
         ]);
@@ -47,14 +47,14 @@ class LoginTest extends BaseTest
     public function successfully_logout()
     {
         // First we log in
-        $this->postJson('/login', [
+        $this->postJson('/api/login', [
             'email' => 'testuser@example.com',
             'password' => 'pAsSwOrD',
         ]);
         $this->assertAuthenticated();
 
         // Now we log out
-        $response = $this->postJson('/logout');
+        $response = $this->postJson('/api/logout');
 
         $response->assertStatus(204);
         $this->assertGuest();
