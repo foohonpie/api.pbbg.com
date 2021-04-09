@@ -20,7 +20,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
-    Route::post('/register', [RegisteredUserController::class, 'store'])
+    Route::post('register', [RegisteredUserController::class, 'store'])
         ->middleware(['guest']);
 });
 
