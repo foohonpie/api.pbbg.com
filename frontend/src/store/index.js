@@ -18,14 +18,14 @@ const store = new Vuex.Store({
   },
   actions: {
     async [SUBMITTED_USER_LOGIN_ACTION](context, formData) {
-      await api.post('/login', JSON.stringify({
+      await api.post('/auth/login', JSON.stringify({
         email: formData[EMAIL],
         password: formData[PASSWORD],
       }))
       // commit(UPDATE_USER_MUTATION, )
     },
     async [SUBMITTED_USER_REGISTER_ACTION](context, formData) {
-      await api.post('/register', JSON.stringify({
+      await api.post('/auth/register', JSON.stringify({
         name: formData[NAME],
         email: formData[EMAIL],
         password: formData[PASSWORD],
