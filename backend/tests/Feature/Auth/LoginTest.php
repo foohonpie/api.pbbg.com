@@ -39,7 +39,7 @@ class LoginTest extends BaseTest
             'password' => 'wrong password',
         ]);
 
-        $response->assertStatus(422);
+        $response->assertStatus(401);
         $this->assertGuest();
     }
 
@@ -56,7 +56,7 @@ class LoginTest extends BaseTest
         // Now we log out
         $response = $this->postJson('/api/auth/logout');
 
-        $response->assertStatus(204);
+        $response->assertStatus(200);
         $this->assertGuest();
     }
 }
