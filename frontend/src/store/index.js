@@ -15,17 +15,20 @@ const store = new Vuex.Store({
   plugins: [VuexORM.install(ormDatabase)],
   state: {
     user: null,
+    token: null,
   },
   actions: {
-    async [SUBMITTED_USER_LOGIN_ACTION](context, formData) {
-      await api.post('/login', JSON.stringify({
+    async [SUBMITTED_USER_LOGIN_ACTION]({ commit }, formData) {
+      await api.post('/auth/login', JSON.stringify({
         email: formData[EMAIL],
         password: formData[PASSWORD],
-      }))
+      })).then(({ data }) => {
+        commit('SET_ACCESS_TOKEN', data.access_token)
+      })
       // commit(UPDATE_USER_MUTATION, )
     },
     async [SUBMITTED_USER_REGISTER_ACTION](context, formData) {
-      await api.post('/register', JSON.stringify({
+      await api.post('/auth/register', JSON.stringify({
         name: formData[NAME],
         email: formData[EMAIL],
         password: formData[PASSWORD],
@@ -33,7 +36,11 @@ const store = new Vuex.Store({
       }))
     },
   },
-  mutations: {},
+  mutations: {
+    SET_ACCESS_TOKEN(state, token) {
+      state.token = token
+    },
+  },
 })
 
 export default store

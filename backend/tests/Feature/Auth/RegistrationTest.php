@@ -17,7 +17,7 @@ class RegistrationTest extends BaseTest
     /** @test */
     public function successfully_register()
     {
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/auth/register', [
             'name' => 'Test User',
             'email' => 'testuser@example.com',
             'password' => 'pAsSwOrD',
@@ -30,7 +30,7 @@ class RegistrationTest extends BaseTest
     /** @test */
     public function cannot_register_without_all_fields()
     {
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/auth/register', [
             'email' => 'testuser@example.com',
             'password' => 'pAsSwOrD',
             'password_confirmation' => 'pAsSwOrD',
@@ -42,7 +42,7 @@ class RegistrationTest extends BaseTest
     /** @test */
     public function cannot_register_with_mismatched_passwords()
     {
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/auth/register', [
             'name' => 'Test User',
             'email' => 'testuser@example.com',
             'password' => 'pAsSwOrD',
